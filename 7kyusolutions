@@ -1,0 +1,139 @@
+1.Count the number of divisors of a positive integer n.
+
+  Random tests go up to n = 500000.
+  code -public class FindDivisor {
+
+          public long numberOfDivisors(int n) {
+            long count = 0 ;
+            // TODO please write your code below this comment
+            for (int i = 1 ; i <=n ; i++)
+              {
+              if (n % i == 0)
+                count ++ ;
+            }
+               return count ;
+          }
+
+        }
+  2.Please write a function that sums a list, but ignores any duplicated items in the list.
+
+    For instance, for the list [3, 4, 3, 6] the function should return 10,
+    and for the list [1, 10, 3, 10, 10] the function should return 4.
+    code -import java.util.* ;
+          public class Solution{
+              public static int sumNoDuplicates(int[] arr){
+                //Put your code here ʌ_ʌ
+                int sum =  0 ;
+                Map<Integer , Integer> mp = new HashMap<>();
+                for (int x : arr)
+                  { if (mp.containsKey(x))
+                   mp.put(x ,mp.get(x)+1);
+                    else
+                      mp.put(x ,1);
+
+                   }
+                for (Map.Entry<Integer , Integer> x: mp.entrySet())
+                {
+                  if (x.getValue() == 1)
+                    {
+                     sum += x.getKey();
+                  }
+                }
+
+                return sum;
+              }
+          }
+    3.Multiplication - Generators #2
+    public class Generator {
+
+    	private final int a;
+    	private int num = 1;
+
+    	private Generator(int a) {
+    		this.a = a;
+    	}
+
+    	public static Generator of(int a) {
+    		return new Generator( a );
+    	}
+
+    	public String next() {
+
+
+        String output = a + " x " + num +  " = " + a*num;
+        num++;
+
+        return output;
+
+    		// generate your generator code here.
+    	}
+    }
+    4.Given an array of ones and zeroes, convert the equivalent binary value to an integer.
+
+      Eg: [0, 0, 0, 1] is treated as 0001 which is the binary representation of 1.
+      code -import java.util.List;
+
+            public class BinaryArrayToNumber {
+
+                public static int ConvertBinaryArrayToInt(List<Integer> binary) {
+                  int sum = 0 ;
+                  int n = binary.size();
+                  for (int i = 0 ; i < n ; i++)
+                    {
+                      int power = n- i - 1 ;
+
+                      sum += Math.pow(2 , power)*binary.get(i);
+                  }
+                    return sum ;
+                }
+            }
+    5.Ben has a very simple idea to make some profit: he buys something and sells it again. Of course, this wouldn't give him any profit at all if he was simply to buy and sell it at the same price. Instead, he's going to buy it for the lowest possible price and sell it at the highest.
+
+      Task
+      Write a function that returns both the minimum and maximum number of the given list/array.
+
+      Examples (Input --> Output)
+      [1,2,3,4,5] --> [1,5]
+      [2334454,5] --> [5,2334454]
+      [1]         --> [1,1]
+      code-import java.util.Arrays;
+           class MinMax {
+               public static int[] minMax(int[] arr) {
+                   // Your awesome code here
+               int ans[] = new int[2];
+                 int a =  Arrays.stream(arr).max().getAsInt();
+                 int b = Arrays.stream(arr).min().getAsInt();
+                  ans[0] = b ;
+                 ans[1]  =a ;
+                 return ans ;
+               }
+           }
+     6.Given a list of integers, determine whether the sum of its elements is odd or even.
+
+       Give your answer as a string matching "odd" or "even".
+
+       If the input array is empty consider it as: [0] (array with a zero).
+
+       Examples:
+       Input: [0]
+       Output: "even"
+
+       Input: [0, 1, 4]
+       Output: "odd"
+
+       Input: [0, -1, -5]
+       Output: "even"
+       code-public class Codewars {
+              public static String oddOrEven (int[] array) {
+                 int sum = 0  ;
+                for (int i = 0 ; i < array.length ; i++)
+                  {
+                   sum += array[i];
+                }
+                if (sum%2 == 0)
+                  return "even";
+                else
+                  return "odd";
+              // your code
+              }
+            }
