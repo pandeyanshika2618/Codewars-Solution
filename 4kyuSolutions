@@ -1,0 +1,238 @@
+Q1- Sumbyfactors
+Code -import java.util.*;
+
+      public class SumOfDivided {
+
+          public static Set<Integer> generatePrimes(int limit) {
+              Set<Integer> primes = new HashSet<>();
+              boolean[] isPrime = new boolean[limit + 1];
+              Arrays.fill(isPrime, true);
+
+              for (int p = 2; p <= limit; p++) {
+                  if (isPrime[p]) {
+                      primes.add(p);
+                      for (int multiple = p * 2; multiple <= limit; multiple += p) {
+                          isPrime[multiple] = false;
+                      }
+                  }
+              }
+
+              return primes;
+          }
+
+          public static String sumOfDivided(int[] l) {
+              int maxAbs = 0;
+              for (int num : l) {
+                  maxAbs = Math.max(maxAbs, Math.abs(num));
+              }
+
+              Set<Integer> primes = generatePrimes(maxAbs);
+              Map<Integer, Integer> primeSums = new HashMap<>();
+
+              for (int num : l) {
+                  int absNum = Math.abs(num);
+                  for (int prime : primes) {
+                      if (absNum % prime == 0) {
+                          primeSums.put(prime, primeSums.getOrDefault(prime, 0) + num);
+                      }
+                  }
+              }
+
+              List<Integer> sortedPrimes = new ArrayList<>(primeSums.keySet());
+              Collections.sort(sortedPrimes);
+
+              StringBuilder result = new StringBuilder();
+              for (int prime : sortedPrimes) {
+                  result.append("(").append(prime).append(" ").append(primeSums.get(prime)).append(")");
+              }
+
+              return result.toString();
+          }
+
+
+      }
+
+  2.A format for expressing an ordered list of integers is to use a comma separated list of either
+
+    individual integers
+    or a range of integers denoted by the starting integer separated from the end integer in the range by a dash, '-'. The range includes all integers in the interval including both endpoints. It is not considered a range unless it spans at least 3 numbers. For example "12,13,15-17"
+    Complete the solution so that it takes a list of integers in increasing order and returns a correctly formatted string in the range format.
+    Code -class Solution {
+              public static String rangeExtraction(int[] arr) {
+                  StringBuilder sb = new StringBuilder();
+                  int n = arr.length;
+
+                  for (int i = 0; i < n; i++) {
+                      int start = arr[i];
+                      int end = start;
+
+                      while (i < n - 1 && arr[i + 1] - arr[i] == 1) {
+                          end = arr[++i];
+                      }
+
+                      if (end - start >= 2) {
+                          sb.append(start).append('-').append(end);
+                      } else {
+                          if (start != end) {
+                              sb.append(start).append(',').append(end);
+                          } else {
+                              sb.append(start);
+                          }
+                      }
+
+                      if (i < n - 1) {
+                          sb.append(',');
+                      }
+                  }
+
+                  return sb.toString();
+                  }
+                  }
+3.Sum of intervals
+code -package cw;
+      import java.util.Arrays;
+      import java.util.Comparator;
+      public class Interval {
+
+          public static int sumIntervals(int[][] intervals) {
+
+              if (intervals.length == 0) {
+                  return 0;
+              }
+
+              Arrays.sort(intervals, Comparator.comparingInt(a -> a[0]));
+
+              int DiffSum= 0;
+              int p = intervals[0][0];
+              int q= intervals[0][1];
+
+              for (int i = 1; i < intervals.length; i++) {
+                  int start = intervals[i][0];
+                  int end = intervals[i][1];
+
+
+                  if (start <= q) {
+
+                      q = Math.max(q, end);
+                  } else {
+
+                      DiffSum += q-p;
+
+                      p = start;
+                      q = end;
+                  }
+              }
+
+            DiffSum += q- p ;
+
+              return DiffSum;
+          }
+      }
+4.Next bigger number with the same digit
+code -import java.util.*;
+      public class Kata {
+
+          public static long nextBiggerNumber(long n) {
+              char[] digits = String.valueOf(n).toCharArray();
+              for (int i = digits.length - 2; i >= 0; i--) {
+                  for (int j = digits.length - 1; j > i; j--) {
+                      if (digits[i] < digits[j]) {
+                          char temp = digits[i];
+                          digits[i] = digits[j];
+                          digits[j] = temp;
+                          Arrays.sort(digits, i + 1, digits.length);
+                          return Long.valueOf(String.valueOf(digits));
+                      }
+                  }
+              }
+              return -1;
+              }
+
+ 5.Next smaller number with the same digits
+ code -import java.util.*;
+
+       public class Kata {
+           public static long nextSmaller(long n) {
+               char[] digits = String.valueOf(n).toCharArray();
+
+               for (int i = digits.length - 2; i >= 0; i--) {
+                   for (int j = digits.length - 1; j > i; j--) {
+                       if (digits[i] > digits[j]) {
+                           char temp = digits[i];
+                           digits[i] = digits[j];
+                           digits[j] = temp;
+
+                           Arrays.sort(digits, i + 1, digits.length);
+                           reverse(digits, i + 1, digits.length - 1);
+
+                           long result = Long.valueOf(String.valueOf(digits));
+                           if (String.valueOf(result).length() == digits.length) {
+                               return result;
+                           } else {
+                               return -1;
+                           }
+                       }
+                   }
+               }
+               return -1;
+           }
+
+           private static void reverse(char[] arr, int start, int end) {
+               while (start < end) {
+                   char temp = arr[start];
+                   arr[start] = arr[end];
+                   arr[end] = temp;
+                   start++;
+                   end--;
+               }
+           }
+       }
+   5.Snail
+   code -public class Snail {
+
+             public static int[] snail(int[][] array) {
+
+               int n =  array.length ;
+               int m = array[0].length ;
+
+               int[] ans = new int[m * n];
+              int top = 0 ;
+               int left = 0 ;
+               int  right = m-1 ;
+               int bottom = n - 1;
+               int index = 0 ;
+
+
+               while (left <= right && top <= bottom)
+                 {
+                   for ( int i = left; i <= right ; i++)
+                     {
+                      ans[index++] = array[top][i];
+                   }
+                  top++ ;
+                  for ( int i = top ; i <= bottom ; i++)
+                    {
+                     ans [index++] = array[i][right];
+                  }
+                 right-- ;
+                  if (top <= bottom)
+                    {
+                    for (int i = right ; i >= left ; i--)
+                      {
+                       ans[index++] = array[bottom][i];
+
+                    }
+                     bottom -- ;
+                    }
+
+                    if (left <= right)
+                      {
+                      for (int i = bottom ; i >= top ; i-- )
+                        ans[index++] = array[i][left];
+                      left++;
+                    }
+
+                  }
+               return ans ;
+            }
+         }

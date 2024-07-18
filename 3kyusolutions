@@ -1,0 +1,148 @@
+How many are smaller tah me ll?
+code-public class Smaller {
+
+         public static int[] smaller(int[] unsorted) {
+           int n = unsorted.length;
+             int[][] v = new int[n][2];
+
+             for (int i = 0; i < n; i++) {
+                 v[i][0] = unsorted[i];
+                 v[i][1] = i;
+             }
+
+
+             int[] ans = new int[n];
+
+
+             mergesort(v, ans, 0, n - 1);
+
+             return ans;
+         }
+       static void merge(int[][] v, int[] ans, int l, int mid, int h)
+         {
+
+             int[][] t = new int[h - l + 1][2];
+             int i = l;
+             int j = mid + 1;
+             int k = 0;
+
+             while (i < mid + 1 && j <= h) {
+
+
+                 if (v[i][0] > v[j][0]) {
+                     ans[v[i][1]] += (h - j + 1);
+                     t[k][0] = v[i][0];
+                     t[k][1] = v[i][1];
+                     i++;
+                 }
+                 else {
+                     t[k][0] = v[j][0];
+                     t[k][1] = v[j][1];
+                     j++;
+                 }
+                 k++;
+             }
+
+
+             while (i <= mid) {
+                 t[k][0] = v[i][0];
+                 t[k][1] = v[i][1];
+                 k++;
+                 i++;
+             }
+
+             while (j <= h) {
+                 t[k][0] = v[j][0];
+                 t[k][1] = v[j][1];
+                 k++;
+                 j++;
+             }
+
+             k = 0;
+             for (i = l; i <= h; i++, k++) {
+                 v[i][0] = t[k][0];
+                 v[i][1] = t[k][1];
+             }
+         }
+
+         static void mergesort(int[][] v, int[] ans, int i, int j)
+         {
+             if (i < j) {
+                 int mid = (i + j) / 2;
+
+
+                 mergesort(v, ans, i, mid);
+
+
+                 mergesort(v, ans, mid + 1, j);
+
+
+                 merge(v, ans, i, mid, j);
+             }
+         }
+
+
+
+
+     }
+ 2-Sudoku Solver
+ public class SudokuSolver {
+
+     public static int[][] sudoku(int[][] puzzle) {
+         if (solve(puzzle)) {
+             return puzzle;
+         }
+         return null;
+     }
+
+     private static boolean solve(int[][] board) {
+         for (int row = 0; row < 9; row++) {
+             for (int col = 0; col < 9; col++) {
+                 if (board[row][col] == 0) {
+                     for (int num = 1; num <= 9; num++) {
+                         if (isSafe(board, row, col, num)) {
+                             board[row][col] = num;
+
+                             if (solve(board)) {
+                                 return true;
+                             }
+
+                             board[row][col] = 0;
+                         }
+                     }
+                     return false;
+                 }
+             }
+         }
+         return true;
+     }
+
+     private static boolean isSafe(int[][] board, int row, int col, int number) {
+
+         for (int j = 0; j < 9; j++) {
+             if (board[row][j] == number) {
+                 return false;
+             }
+         }
+
+         for (int i = 0; i < 9; i++) {
+             if (board[i][col] == number) {
+                 return false;
+             }
+         }
+
+
+         int boxRowStart = (row / 3) * 3;
+         int boxColStart = (col / 3) * 3;
+         for (int i = boxRowStart; i < boxRowStart + 3; i++) {
+             for (int j = boxColStart; j < boxColStart + 3; j++) {
+                 if (board[i][j] == number) {
+                     return false;
+                 }
+             }
+         }
+
+         return true;
+       }
+   }
+    
